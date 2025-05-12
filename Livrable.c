@@ -84,7 +84,6 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
 int menuDemarrage();
 void defaite(int* score);
 void victoire(int* score);
-void nettoyer_cache();
 
 //Fonctions constructrices
 Defenseur constructeur_PinguPatrouilleur(Defenseur a) {
@@ -127,14 +126,6 @@ Attaquant constructeur_LugisteBarjo(Attaquant a) { // Attaquant lent et résista
 }
 
 //Fonctions
-
-//Fonction nettoyage cache 
-void nettoyer_cache() {
-    int ch;
-    
-    while ((ch = getchar()) != '\n' && ch != EOF); // Nettoyer le buffer
-    // Cela consommera tous les caractères jusqu'à ce qu'une nouvelle ligne ou une fin de fichier (EOF) soit trouvée.
-}
 
 // Fonction pour calculer la distance euclidienne entre deux unités
 int calculerDistance(int x1, int y1, int x2, int y2) {
