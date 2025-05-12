@@ -349,7 +349,7 @@ void chargement(const char* nom_fichier, Case*** carte, int* taillecarte, Defens
     fscanf(fichier, "%d", nbDefenseurs);
     *defenseurs = (Defenseur*)malloc(*nbDefenseurs * sizeof(Defenseur));
     for (int i = 0; i < *nbDefenseurs; i++) {
-        fscanf(fichier, "%d %d %f %d %d %d", &(*defenseurs)[i].portee, &(*defenseurs)[i].degats, &(*defenseurs)[i].vitessetir,&(*defenseurs)[i].prix, &(*defenseurs)[i].coordx, &(*defenseurs)[i].coordy);
+        fscanf(fichier, "%d %d %d %d %d", &(*defenseurs)[i].portee, &(*defenseurs)[i].degats, &(*defenseurs)[i].prix, &(*defenseurs)[i].coordx, &(*defenseurs)[i].coordy);
     }
 
     fscanf(fichier, "%d", nbEnnemis);
@@ -390,7 +390,7 @@ void sauvegarde(const char* nom_fichier, Case** carte, int taillecarte, Defenseu
     // Sauvegarde des défenseurs
     fprintf(fichier, "%d\n", nbDefenseurs); // Nombre de défenseurs
     for (int i = 0; i < nbDefenseurs; i++) {
-        fprintf(fichier, "%d %d %f %d %d %d\n", defenseurs[i].portee, defenseurs[i].degats, defenseurs[i].vitessetir, defenseurs[i].prix, defenseurs[i].coordx, defenseurs[i].coordy);
+        fprintf(fichier, "%d %d %d %d %d\n", defenseurs[i].portee, defenseurs[i].degats, defenseurs[i].prix, defenseurs[i].coordx, defenseurs[i].coordy);
     }
 
     // Sauvegarde des ennemis actifs
