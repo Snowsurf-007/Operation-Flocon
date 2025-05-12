@@ -52,7 +52,6 @@ typedef struct {
 
 typedef struct {
     int vie;
-    float esquive; //pourcentage
     int gain;
     int coordx;
     int coordy;
@@ -89,43 +88,40 @@ void nettoyer_cache();
 
 //Fonctions constructrices
 Defenseur constructeur_PinguPatrouilleur(Defenseur a) {
-    a.portee=6;
+    a.portee=3;
     a.degats=60;
     a.prix=100;
     return a;
 }
 
 Defenseur constructeur_FloconPerceCiel(Defenseur a) {
-    a.portee=12;
+    a.portee=6;
     a.degats=40;
     a.prix=200;
     return a;
 }
 
 Defenseur constructeur_GardePolaire(Defenseur a) {
-    a.portee=3;
+    a.portee=1;
     a.degats=100;
     a.prix=150;
     return a;
 }
 
-Attaquant constructeur_SkieurFrenetique(Attaquant a) { // Attaquant rapide et faible, petit taux d'esquive 
+Attaquant constructeur_SkieurFrenetique(Attaquant a) { // Attaquant rapide et faible
     a.vie=300;
-    a.esquive=0.15;
     a.gain=20;
     return a;
 }
 
-Attaquant constructeur_SnowboarderAcrobate(Attaquant a) { // Attaquant vitesse moyenne, vie moyenne mais bonne esquive
+Attaquant constructeur_SnowboarderAcrobate(Attaquant a) { // Attaquant vitesse moyenne, vie moyenne
     a.vie=600;
-    a.esquive=0.30;
     a.gain=30;
     return a;
 }
 
 Attaquant constructeur_LugisteBarjo(Attaquant a) { // Attaquant lent et résistant
     a.vie=2000;
-    a.esquive=0.01;
     a.gain=50;
     return a;
 }
@@ -140,9 +136,12 @@ void nettoyer_cache() {
     // Cela consommera tous les caractères jusqu'à ce qu'une nouvelle ligne ou une fin de fichier (EOF) soit trouvée.
 }
 
-// Fonction pour calculer la distance de manhattan entre deux unités
+// Fonction pour calculer la distance euclidienne entre deux unités
 int calculerDistance(int x1, int y1, int x2, int y2) {
-    return abs(x2 - x1) + (y2 - y1);
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    int euclide = sqrt(pow(dx, 2) + pow(dy, 2));
+    return euclide;
 }
 
 //Fonction permettant au défenseurs de mettre des dégâts aux attaquants
@@ -160,36 +159,32 @@ void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs,
             printf("def.coordx = %d, def.coordy = %d, ennemi->x = %d, ennemi->y = %d \n", def.coordx, def.coordy, ennemi->x, ennemi->y);
 
             // Calcul de la distance entre le défenseur et l'ennemi
-            float distance = calculerDistance(def.coordx, def.coordy, ennemi->x, ennemi->y);
+            int distance = calculerDistance(def.coordx, def.coordy, ennemi->x, ennemi->y);
 		
 						printf("portée = %d, distance = %d, \n", def.portee, distance);
 		
             // Si l'ennemi est à portée
             if (distance <= def.portee) {
-            
-                // Applique les dégâts en fonction de l'esquive
-                if ((rand() % 100) / 100 > ennemi->attaquant.esquive) {
                     
-                    ennemi->attaquant.vie -= def.degats;
+                ennemi->attaquant.vie -= def.degats;
+                
+                // Si l'ennemi est éliminé
+                if (ennemi->attaquant.vie <= 0) {
+                    int x1 = ennemi->x;
+                    int y1 = ennemi->y;
                     
-                    // Si l'ennemi est éliminé
-                    if (ennemi->attaquant.vie <= 0) {
-                        int x1 = ennemi->x;
-                        int y1 = ennemi->y;
-                        
-                        carte[x1][y1].type = 6; // Remet la case à "chemin"
-                        (*score)++; // Incrémente le score
+                    carte[x1][y1].type = 6; // Remet la case à "chemin"
+                    (*score)++; // Incrémente le score
 
-                        // Supprime l'ennemi de la liste
-                        for (int k = j; k < *nbEnnemis - 1; k++) {
-                            ennemis[k] = ennemis[k + 1];
-                        }
-                        
-                        (*nbEnnemis)--; // Réduit le nombre d'ennemis
-                        j--; // Réajuste l'indice pour ne pas sauter un ennemi
+                    // Supprime l'ennemi de la liste
+                    for (int k = j; k < *nbEnnemis - 1; k++) {
+                        ennemis[k] = ennemis[k + 1];
                     }
-                } 
-            }
+                    
+                    (*nbEnnemis)--; // Réduit le nombre d'ennemis
+                    j--; // Réajuste l'indice pour ne pas sauter un ennemi
+                }
+            } 
         }
     }
 }
@@ -355,7 +350,7 @@ void chargement(const char* nom_fichier, Case*** carte, int* taillecarte, Defens
     fscanf(fichier, "%d", nbEnnemis);
     *ennemis = (EnnemiActif*)malloc(*nbEnnemis * sizeof(EnnemiActif));
     for (int i = 0; i < *nbEnnemis; i++) {
-        fscanf(fichier, "%d %f %d %d %d", &(*ennemis)[i].attaquant.vie, &(*ennemis)[i].attaquant.esquive, &(*ennemis)[i].attaquant.gain, &(*ennemis)[i].x, &(*ennemis)[i].y);
+        fscanf(fichier, "%d %d %d", &(*ennemis)[i].attaquant.vie, &(*ennemis)[i].x, &(*ennemis)[i].y);
     }
 
     fscanf(fichier, "%d", score);
@@ -396,7 +391,7 @@ void sauvegarde(const char* nom_fichier, Case** carte, int taillecarte, Defenseu
     // Sauvegarde des ennemis actifs
     fprintf(fichier, "%d\n", nbEnnemis); // Nombre d'ennemis
     for (int i = 0; i < nbEnnemis; i++) {
-        fprintf(fichier, "%d %f %d %d %d\n", ennemis[i].attaquant.vie, ennemis[i].attaquant.esquive, ennemis[i].attaquant.gain, ennemis[i].x, ennemis[i].y);
+        fprintf(fichier, "%d %d %d\n", ennemis[i].attaquant.vie, ennemis[i].x, ennemis[i].y);
     }
 
     // Sauvegarde des autres variables importantes
