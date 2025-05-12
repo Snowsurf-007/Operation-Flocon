@@ -535,7 +535,7 @@ void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defense
 
             if (*flocons < nouv_def.prix) {
                 printf("\t Vous n'avez pas assez de flocons(%s ) (%d requis, %d disponibles).\n",EMOJI_FLOCON, nouv_def.prix, *flocons);
-                printf("\t Souhaitez-vous choisir un autre défenseur ?\n1 pour oui ou 0 pour non\n");
+                printf("\t Souhaitez-vous choisir un autre défenseur ?\n \t1 pour oui ou 0 pour non\n");
                 printf("\t Votre choix : ");
                 
                 if (scanf(" %d", &placer) != 1 || (placer != 0 && placer != 1)) {
