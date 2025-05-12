@@ -89,21 +89,21 @@ void nettoyer_cache();
 //Fonctions constructrices
 Defenseur constructeur_PinguPatrouilleur(Defenseur a) {
     a.portee=3;
-    a.degats=60;
+    a.degats=50;
     a.prix=100;
     return a;
 }
 
 Defenseur constructeur_FloconPerceCiel(Defenseur a) {
     a.portee=6;
-    a.degats=40;
+    a.degats=30;
     a.prix=200;
     return a;
 }
 
 Defenseur constructeur_GardePolaire(Defenseur a) {
     a.portee=1;
-    a.degats=80;
+    a.degats=70;
     a.prix=150;
     return a;
 }
@@ -155,13 +155,9 @@ void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs,
             if (ennemi->attaquant.vie <= 0) {
                 continue;
             }
-            
-            printf("def.coordx = %d, def.coordy = %d, ennemi->x = %d, ennemi->y = %d \n", def.coordx, def.coordy, ennemi->x, ennemi->y);
 
             // Calcul de la distance entre le défenseur et l'ennemi
             int distance = calculerDistance(def.coordx, def.coordy, ennemi->x, ennemi->y);
-		
-						printf("portée = %d, distance = %d, \n", def.portee, distance);
 		
             // Si l'ennemi est à portée
             if (distance <= def.portee) {
@@ -677,10 +673,10 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
 		        generer_attaquant(*carte, colonneDebut, ennemis, nbEnnemis, &compteur, vague);
 		    }
 		    
-		    //system("clear");
+		    system("clear");
 		    afficher_carte(*carte, *taillecarte);
 		}
-		(*flocons) += 75;
+		(*flocons) += 50;
 		printf("\n \tScore=%d\n", *score);
 		sleep(2);
 		
@@ -767,7 +763,7 @@ int main() {
     EnnemiActif* ennemis[80];
     int nbEnnemis = 0;
     int score = 0;
-    int flocons = 250;
+    int flocons = 150;
     int vague = 0;
     Defenseur* defenseurs = (Defenseur*)malloc(100 * sizeof(Defenseur)); // Pre-allocation d'espace pour 100 defenseurs
     if (defenseurs == NULL) {
