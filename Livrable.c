@@ -105,7 +105,7 @@ Defenseur constructeur_FloconPerceCiel(Defenseur a) {
 
 Defenseur constructeur_GardePolaire(Defenseur a) {
     a.portee=3;
-    a.degats=100000;
+    a.degats=100;
     a.prix=150;
     return a;
 }
@@ -143,20 +143,7 @@ void nettoyer_cache() {
 
 // Fonction pour calculer la distance de manhattan entre deux unités
 int calculerDistance(int x1, int y1, int x2, int y2) {
-    int dis = 0;
-    int disx = (x2 - x1);
-    int disy = (y2 - y1);
-    
-    if (disx < 0) {
-        disx = -disx;
-    }
-    
-    if (disy < 0) {
-        disy = -disy;
-    }
-    
-    dis = disx + disy;
-    return dis;
+    return abs(x2 - x1) + (y2 - y1);
 }
 
 //Fonction permettant au défenseurs de mettre des dégâts aux attaquants
@@ -624,7 +611,7 @@ void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defense
         liste_defenseur[*nb_defenseur-1].coordy = coord_y;
         
         if (carte[coord_y][coord_x_index].type != 0 && carte[coord_y][coord_x_index].type != 1 && carte[coord_y][coord_x_index].type != 2 && carte[coord_y][coord_x_index].type != 3) {
-            printf("\t Cette case n'est pas de la neige. Recommencez.\n");
+            printf("\t Cette case n'est pas de la neige. Recommencez.\n\n");
             continue;
         }
 
@@ -687,17 +674,7 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
 		    
                         if ((*ennemis)[i].x == *taillecarte - 1 && (*ennemis)[i].y == colonneCouronne){
 		            defaite(score);
-        		    // Libérer mémoire proprement avant de quitter
-        		    free(*ennemis);
-        		    *ennemis = NULL;
-        		    
-        		    for (int k = 0; k < *taillecarte; k++){
-        			free((*carte)[k]);
-        			free(*carte);
-        			(*carte)[k] = NULL;
-        			*carte = NULL;
-        			return;
-        		    }
+        		    return;
 		        }
 		    }
 
@@ -732,16 +709,7 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
 	}
 	victoire(score);
     // Libération de la mémoire
-    free(*ennemis);
-    *ennemis = NULL;
     
-    for (int i = 0; i < *taillecarte; i++) {
-        free((*carte)[i]);
-        (*carte)[i] = NULL;
-    }
-    
-    free(*carte);
-    *carte = NULL;
 }
 
 //Interface utilisateur qui demande a l'utilisateur de faire les choix de partie possible
@@ -800,11 +768,12 @@ int main() {
     srand(time(NULL));   
     Case** carte = NULL; 
     int taillecarte = 0;
+    int* ptrtaillecarte = &taillecarte;
     int nbDefenseurs = 0;
     EnnemiActif* ennemis[80];
     int nbEnnemis = 0;
     int score = 0;
-    int flocons = 350;
+    int flocons = 250;
     int vague = 0;
     Defenseur* defenseurs = (Defenseur*)malloc(100 * sizeof(Defenseur)); // Pre-allocation d'espace pour 100 defenseurs
     if (defenseurs == NULL) {
@@ -815,11 +784,11 @@ int main() {
     while (jeu_en_cours == 1){
         int choix_menu=menuDemarrage(); // Affiche le menu principal et récupère le choix
 
-        switch (choix_menu){
+        switch (choix_menu) {
             case 1:
-            	system("make");
             	remove("sauvegarde.txt");
                 lancerpartie(&carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague); // Lance une nouvelle partie
+                system("make");
                 break;
             case 2:
                 chargement("sauvegarde.txt", &carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague);
@@ -827,16 +796,28 @@ int main() {
                 system("make");
                 break;
             case 3:
-                printf("\t A plus 👋😊\n");
+                printf("\n\t A plus 👋😊\n\n");
                 jeu_en_cours=0; // Quitte la boucle principale
-                break;
+                free(defenseurs);
+                defenseurs = NULL;
+                return 0;
             default:
                 printf("\t Choix invalide. Veuillez réessayer.\n");
         }
     }
-    
+    // Libération de la mémoire
     free(defenseurs);
     defenseurs = NULL;
+    
+    free(*ennemis);
+    *ennemis = NULL;
+    
+    for (int i = 0; i < *ptrtaillecarte; i++) {
+        free(*(carte + i));
+    }
+    
+    free(*carte);
+    *carte = NULL;
     
     return 0;
 }
