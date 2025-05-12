@@ -38,7 +38,6 @@ typedef enum { //Enumeration pour les types de cases
 typedef struct {
     int portee;
     int degats;
-    float vitessetir;
     int prix;
     int coordx;
     int coordy;
