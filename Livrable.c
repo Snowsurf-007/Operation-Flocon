@@ -103,7 +103,7 @@ Defenseur constructeur_FloconPerceCiel(Defenseur a) {
 
 Defenseur constructeur_GardePolaire(Defenseur a) {
     a.portee=1;
-    a.degats=100;
+    a.degats=80;
     a.prix=150;
     return a;
 }
