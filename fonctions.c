@@ -82,6 +82,7 @@ void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs,
                     
                     (*nbEnnemis)--; // Réduit le nombre d'ennemis
                     j--; // Réajuste l'indice pour ne pas sauter un ennemi
+					break;
                 }
             } 
         }
