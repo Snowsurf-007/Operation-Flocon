@@ -25,7 +25,7 @@
 
 //On définit les structures
 typedef enum { //Enumeration pour les types de cases
-    NEIGE=0,
+    NEIGE=3,
     PIERRE=4,
     SAPIN=5,
     DRAPEAU=6,
@@ -39,6 +39,7 @@ typedef enum { //Enumeration pour les types de cases
 } TypeCase;
 
 typedef struct {
+    int type;
     int portee;
     int degats;
     int prix;
@@ -55,6 +56,7 @@ typedef struct {
 
 typedef struct {
     int vie;
+    float esquive;
     int coordx;
     int coordy;
 } Attaquant;
@@ -73,6 +75,7 @@ Attaquant constructeur_SkieurFrenetique(Attaquant a);
 Attaquant constructeur_SnowboarderAcrobate(Attaquant a);
 Attaquant constructeur_LugisteBarjo(Attaquant a);
 int calculerDistance(int x1, int y1, int x2, int y2);
+float randomFloat();
 void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs, EnnemiActif* ennemis, int* nbEnnemis, int* score);
 void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defenseur* liste_defenseur, int* nb_defenseur);
 void afficher_carte(Case** carte, int taillecarte);
