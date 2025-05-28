@@ -2,38 +2,44 @@
 
 //Fonctions constructrices
 Defenseur constructeur_PinguPatrouilleur(Defenseur a) {
-    a.portee = 4;
-    a.degats = 60;
+    a.type = 1;
+    a.portee = 5;
+    a.degats = 150;
     a.prix = 100;
     return a;
 }
 
 Defenseur constructeur_FloconPerceCiel(Defenseur a) {
-    a.portee = 7;
-    a.degats = 40;
+    a.type = 2;
+    a.portee = 10;
+    a.degats = 100;
     a.prix = 200;
     return a;
 }
 
 Defenseur constructeur_GardePolaire(Defenseur a) {
+    a.type = 3;
     a.portee = 1;
-    a.degats = 80;
+    a.degats = 200;
     a.prix = 150;
     return a;
 }
 
 Attaquant constructeur_SkieurFrenetique(Attaquant a) { // Attaquant rapide et faible
     a.vie = 400;
+    a.esquive = 0.15;
     return a;
 }
 
 Attaquant constructeur_SnowboarderAcrobate(Attaquant a) { // Attaquant vitesse moyenne, vie moyenne
     a.vie = 800;
+    a.esquive = 0.30;
     return a;
 }
 
 Attaquant constructeur_LugisteBarjo(Attaquant a) { // Attaquant lent et résistant
     a.vie = 1600;
+    a.esquive = 0.01;
     return a;
 }
 
@@ -45,6 +51,13 @@ int calculerDistance(int x1, int y1, int x2, int y2) {
     int dy = y2 - y1;
     int euclide = sqrt(pow(dx, 2) + pow(dy, 2));
     return euclide;
+}
+
+// Fonction pour générer un nombre aléatoire entre 0 et 1
+float randomFloat() {
+    float alea;
+    alea = rand() % 101 / 100.0f;
+    return alea;
 }
 
 //Fonction permettant au défenseurs de mettre des dégâts aux attaquants
@@ -62,10 +75,11 @@ void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs,
             // Calcul de la distance entre le défenseur et l'ennemi
             int distance = calculerDistance(def.coordx, def.coordy, ennemi->x, ennemi->y);
 	    
-            // Si l'ennemi est à portée
-            if (distance <= def.portee) {
-                    
-                ennemi->attaquant.vie -= def.degats;
+	    float alea = randomFloat();
+            // Si l'ennemi est à portée et n'esquive pas l'attaque
+            if (distance <= def.portee && alea > ennemi->attaquant.esquive) {
+            
+                ennemi->attaquant.vie -= def.degats;  
                 
                 // Si l'ennemi est éliminé
                 if (ennemi->attaquant.vie <= 0) {
@@ -82,9 +96,12 @@ void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs,
                     
                     (*nbEnnemis)--; // Réduit le nombre d'ennemis
                     j--; // Réajuste l'indice pour ne pas sauter un ennemi
-					break;
                 }
-            } 
+                
+                if (def.type == 1 || def.type == 2) {
+		    break;
+		}
+            }
         }
     }
 }
