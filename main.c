@@ -39,11 +39,13 @@ int main() {
                 // ...
                 lancerpartie(&carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague); // Lance une nouvelle partie
                 system("make");
+                system("clear");
                 break;
             case 2:
                 chargement("sauvegarde.txt", &carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague);
                 lancerpartie(&carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague); // Reprend la partie chargée
                 system("make");
+                system("clear");
                 break;
             case 3:
                 printf("\n\t A plus 👋😊\n\n");
