@@ -26,9 +26,6 @@ void afficher_carte(Case** carte, int taillecarte) {
         for (int j = 0; j < taillecarte; j++) {
         
             switch (carte[i][j].type) {
-                case 0:
-                case 1:
-                case 2:
                 case 3:
                     printf("%s ", EMOJI_NEIGE);
                     break;
@@ -216,7 +213,10 @@ void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defense
         
         printf("\n\t Défenseur placé. Il vous reste %d %s .\n", *flocons, EMOJI_FLOCON);
 
-    } while (placer == 1);
+    } while (placer == 1 && *flocons >= 100);
+    if (*flocons < 100) {
+        printf("\t Vous n'avez pas assez de flocons (il faut 100 %s au minimum) (vous avez %d %s).\n",EMOJI_FLOCON, *flocons, EMOJI_FLOCON);
+    }
 }
 
 //Fonction de partie
@@ -277,7 +277,7 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
 		    afficher_carte(*carte, *taillecarte);
 		}
 		(*flocons) += 50;
-		printf("\n \tScore=%d\n", *score);
+		printf("\n \t Score=%d\n", *score);
 		sleep(2);
 		
 		do{
