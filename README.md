@@ -17,6 +17,8 @@ Pour se défendre, le joueur dispose de :
 * 🐧 **Pingu-patrouilleurs**
 * ⛄ **Flocons perce-ciel**
 * 🐻‍❄️ **Gardes polaires**
+* 🐺 **Loup griffeur**
+* 🐉 **Dieu des montagnes**
 
 La carte est générée **aléatoirement** à chaque partie avec un **chemin unique** menant à la couronne. Le joueur place ses défenseurs autour de ce chemin et doit gérer au mieux ses ressources pour survivre aux vagues successives.
 
