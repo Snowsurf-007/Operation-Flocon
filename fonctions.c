@@ -1,49 +1,74 @@
 #include "biblio.h"
 
+//Fonctions
 //Fonctions constructrices
 Defenseur constructeur_PinguPatrouilleur(Defenseur a) {
     a.type = 1;
     a.portee = 5;
-    a.degats = 150;
-    a.prix = 100;
+    a.degats = 100;
+    a.prix = 50;
     return a;
 }
+
 
 Defenseur constructeur_FloconPerceCiel(Defenseur a) {
     a.type = 2;
     a.portee = 10;
-    a.degats = 100;
-    a.prix = 200;
+    a.degats = 60;
+    a.prix = 100;
     return a;
 }
+
 
 Defenseur constructeur_GardePolaire(Defenseur a) {
     a.type = 3;
     a.portee = 1;
-    a.degats = 200;
-    a.prix = 150;
+    a.degats = 130;
+    a.prix = 75;
     return a;
 }
+
+
+Defenseur constructeur_LoupGriffeur(Defenseur a) {
+    a.type = 4;
+    a.portee = 3;
+    a.degats = 25;
+    a.prix = 25;
+    return a;
+}
+
+
+Defenseur constructeur_DieuDesMontagnes(Defenseur a) {
+    a.type = 5;
+    a.portee = 50;
+    a.degats = 250;
+    a.prix = 750;
+    return a;
+}
+
 
 Attaquant constructeur_SkieurFrenetique(Attaquant a) { // Attaquant rapide et faible
     a.vie = 400;
     a.esquive = 0.15;
+    a.gain = 5;
     return a;
 }
+
 
 Attaquant constructeur_SnowboarderAcrobate(Attaquant a) { // Attaquant vitesse moyenne, vie moyenne
     a.vie = 800;
     a.esquive = 0.30;
+    a.gain = 7;
     return a;
 }
+
 
 Attaquant constructeur_LugisteBarjo(Attaquant a) { // Attaquant lent et résistant
     a.vie = 1600;
     a.esquive = 0.01;
+    a.gain = 10;
     return a;
 }
-
-//Fonctions
 
 // Fonction pour calculer la distance euclidienne entre deux unités
 int calculerDistance(int x1, int y1, int x2, int y2) {
@@ -53,6 +78,7 @@ int calculerDistance(int x1, int y1, int x2, int y2) {
     return euclide;
 }
 
+
 // Fonction pour générer un nombre aléatoire entre 0 et 1
 float randomFloat() {
     float alea;
@@ -60,8 +86,9 @@ float randomFloat() {
     return alea;
 }
 
+
 //Fonction permettant au défenseurs de mettre des dégâts aux attaquants
-void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs, EnnemiActif* ennemis, int* nbEnnemis, int* score) {
+void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs, EnnemiActif* ennemis, int* nbEnnemis, int* score, int* flocons) {
 
     for (int i = 0; i < *nbDefenseurs; i++) {
        	Defenseur def = defenseurs[i]; // Pointeur vers le défenseur actuel
@@ -88,6 +115,7 @@ void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs,
                     
                     carte[y1][x1].type = 6; // Remet la case à "chemin"
                     (*score)++; // Incrémente le score
+                    (*flocons) += ennemi->attaquant.gain;
 
                     // Supprime l'ennemi de la liste
                     for (int k = j; k < *nbEnnemis - 1; k++) {
@@ -98,13 +126,14 @@ void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs,
                     j--; // Réajuste l'indice pour ne pas sauter un ennemi
                 }
                 
-                if (def.type == 1 || def.type == 2) {
+                if (def.type != 3) {
 		    break;
 		}
             }
         }
     }
 }
+
 
 void creer_carte(Case*** carte, int taillecarte) {
     *carte = (Case**)malloc(taillecarte * sizeof(Case*));
@@ -126,6 +155,7 @@ void creer_carte(Case*** carte, int taillecarte) {
         }
     }
 }
+
 
 void creer_chemin(Case** carte, int taillecarte) {
     int j = rand() % (taillecarte - 6) + 3;
@@ -161,6 +191,7 @@ void creer_chemin(Case** carte, int taillecarte) {
     carte[taillecarte - 1][j].type = 7; //Couronne sur la case d'arrivée
 }
 
+
 void deplacement_attaquant(Case** carte, EnnemiActif* ennemis, int nbEnnemis, int taillecarte) {
     for (int i = 0; i < nbEnnemis; i++){
         int x = ennemis[i].x;
@@ -188,9 +219,13 @@ void deplacement_attaquant(Case** carte, EnnemiActif* ennemis, int nbEnnemis, in
     }
 }
 
+
 void generer_attaquant(Case** carte, int debut, EnnemiActif** ennemis, int* nbEnnemis, int* compteur, int* vague) {
-    // Ne pas dépasser 8 ennemis par vague
-    if (*compteur >= 8 || *nbEnnemis >= 80) {
+
+    // Définir le nombre maximum d'ennemis par vague en utilisant la formule 2n + 1
+    int maxEnnemisParVague = 2 * (*vague) + 1;
+    // Ne pas dépasser le nombre maximum d'ennemis par vague ou le nombre total d'ennemis
+    if (*compteur >= maxEnnemisParVague || *nbEnnemis >= 100) {
         return;
     }
 
@@ -198,11 +233,13 @@ void generer_attaquant(Case** carte, int debut, EnnemiActif** ennemis, int* nbEn
     Attaquant nouv_ennemi;
 
     // Choisir le type d'ennemi selon la vague
-    if (*vague <= 2) {
+    if (*vague <= 3) {
         attaquant = 0;
-    } else if (*vague <= 4) {
+    } 
+    else if (*vague <= 5) {
         attaquant = rand() % 2;
-    } else {
+    } 
+    else {
         attaquant = rand() % 3;
     }
 
@@ -223,7 +260,7 @@ void generer_attaquant(Case** carte, int debut, EnnemiActif** ennemis, int* nbEn
     }
 
     // Référence vers un ennemi actif dans le tableau prédéfini
-    static EnnemiActif pool[80]; // Zone mémoire statique (si appelée plusieurs fois)
+    static EnnemiActif pool[100]; // Zone mémoire statique (si appelée plusieurs fois)
     EnnemiActif* nouveau = &pool[*nbEnnemis];
 
     nouveau->attaquant = nouv_ennemi;
@@ -276,6 +313,7 @@ void chargement(const char* nom_fichier, Case*** carte, int* taillecarte, Defens
 
     fclose(fichier);
 }
+
 
 //Sauvegarde d'une partie
 void sauvegarde(const char* nom_fichier, Case** carte, int taillecarte, Defenseur* defenseurs, int nbDefenseurs, EnnemiActif* ennemis, int nbEnnemis, int score, int flocons, int vague) {
