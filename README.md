@@ -26,7 +26,7 @@ La carte est générée **aléatoirement** à chaque partie avec un **chemin uni
 
 * Maxime **MONTEIL**
 * Raphaël **DUFOUR**
-* Lucien **LEHEUDRE-EPSTEIN**
+* Lucien **LEHEUDRE--EPSTEIN**
 
 ---
 
