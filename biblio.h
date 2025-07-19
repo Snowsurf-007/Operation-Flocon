@@ -17,11 +17,14 @@
 #define EMOJI_PINGOUIN "\xF0\x9F\x90\xA7"
 #define EMOJI_BONHOMMENEIGE "\xE2\x9B\x84"
 #define EMOJI_OURS "\xF0\x9F\x90\xBB"
+#define EMOJI_LOUP "\xF0\x9F\x90\xBA"
+#define EMOJI_DRAGON "\xF0\x9F\x90\x89"
 #define EMOJI_SKIEUR "\xE2\x9B\xB7\xEF\xB8\x8F"
 #define EMOJI_SNOWBOARDER "\xF0\x9F\x8F\x82"
 #define EMOJI_LUGISTE "\xF0\x9F\x9B\xB7"
 #define EMOJI_COURONNE "\xF0\x9F\x91\x91"
 #define EMOJI_FLOCON "\xE2\x9D\x84\xEF\xB8\x8F"
+#define EMOJI_TROPHEE "\xF0\x9F\x8F\x86"
 
 //On définit les structures
 typedef enum { //Enumeration pour les types de cases
@@ -35,7 +38,9 @@ typedef enum { //Enumeration pour les types de cases
     LUGISTE=10,
     PINGOUIN=11,
     BONHOMMENEIGE=12,
-    OURS=13
+    OURS=13,
+    LOUP=14,
+    DRAGON=15
 } TypeCase;
 
 typedef struct {
@@ -57,6 +62,7 @@ typedef struct {
 typedef struct {
     int vie;
     float esquive;
+    int gain;
     int coordx;
     int coordy;
 } Attaquant;
@@ -71,13 +77,16 @@ typedef struct {
 Defenseur constructeur_PinguPatrouilleur(Defenseur a);
 Defenseur constructeur_FloconPerceCiel(Defenseur a);
 Defenseur constructeur_GardePolaire(Defenseur a);
+Defenseur constructeur_LoupGriffeur(Defenseur a);
+Defenseur constructeur_DieuDesMontagnes(Defenseur a);
 Attaquant constructeur_SkieurFrenetique(Attaquant a);
 Attaquant constructeur_SnowboarderAcrobate(Attaquant a);
 Attaquant constructeur_LugisteBarjo(Attaquant a);
 int calculerDistance(int x1, int y1, int x2, int y2);
 float randomFloat();
-void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs, EnnemiActif* ennemis, int* nbEnnemis, int* score);
+void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs, EnnemiActif* ennemis, int* nbEnnemis, int* score, int* flocons);
 void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defenseur* liste_defenseur, int* nb_defenseur);
+void statistiques();
 void afficher_carte(Case** carte, int taillecarte);
 void creer_carte(Case*** carte, int taillecarte);
 void creer_chemin(Case** carte, int taillecarte);
