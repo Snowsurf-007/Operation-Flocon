@@ -79,4 +79,4 @@ Et c’est parti pour défendre la couronne ! 👑❄️
 
 ---
 
-## 🏔️ **Bonne chance, et que le froid soit avec vous !**
+## 🏔️ **Bonne chance, et que la montagne soit avec vous !**
