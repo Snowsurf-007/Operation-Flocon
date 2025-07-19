@@ -32,7 +32,7 @@ La carte est générée **aléatoirement** à chaque partie avec un **chemin uni
 
 ## 🚀 **Fonctionnalités principales**
 
-* 🗘️ **Génération aléatoire** de cartes 2D
+* 🗺️ **Génération aléatoire** de cartes 2D
 * 🛡️ **Placement stratégique** des défenseurs par l'utilisateur
 * 🏃‍♂️ **Déplacement automatique** des ennemis le long du chemin
 * 🎯 **Attaques automatiques** des défenseurs (avec portée et précision)
