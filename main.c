@@ -11,8 +11,8 @@ int main() {
     int nbDefenseurs = 0;
     int nbEnnemis = 0;
     int score = 0;
-    int flocons = 150;
-    int vague = 0;
+    int flocons = 0;
+    int vague = 1;
     int* ptrtaillecarte = &taillecarte;
     Case** carte = NULL;
     EnnemiActif* ennemis[80];
@@ -33,21 +33,26 @@ int main() {
                 nbDefenseurs = 0;
                 nbEnnemis = 0;
                 score = 0;
-                flocons = 150;
-                vague = 0;
+                flocons = 75;
+                vague = 1;
                 // Libérer la mémoire allouée pour la carte et les ennemis si nécessaire
-                // ...
                 lancerpartie(&carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague); // Lance une nouvelle partie
                 system("make");
                 system("clear");
                 break;
             case 2:
                 chargement("sauvegarde.txt", &carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague);
+                vague += 1;
                 lancerpartie(&carte, &taillecarte, &defenseurs, &nbDefenseurs, ennemis, &nbEnnemis, &score, &flocons, &vague); // Reprend la partie chargée
                 system("make");
                 system("clear");
                 break;
             case 3:
+                statistiques();
+                system("make");
+                system("clear");
+                break;
+            case 4:
                 printf("\n\t A plus 👋😊\n\n");
                 jeu_en_cours = 0; // Quitte la boucle principale
                 free(defenseurs);
