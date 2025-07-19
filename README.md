@@ -60,7 +60,7 @@ La carte est générée **aléatoirement** à chaque partie avec un **chemin uni
 6. **Phase de tir** des défenseurs (calcul de portée et esquives)
 7. **Affichage** mis à jour toutes les **0.5 secondes**
 8. **Fin de partie** : Victoire ou Défaite
-9. (Optionnel) **Sauvegarde** ou **reprise** de la partie
+9. **Sauvegarde** ou **reprise** de la partie
 
 ---
 
