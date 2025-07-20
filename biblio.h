@@ -19,9 +19,11 @@
 #define EMOJI_OURS "\xF0\x9F\x90\xBB"
 #define EMOJI_LOUP "\xF0\x9F\x90\xBA"
 #define EMOJI_DRAGON "\xF0\x9F\x90\x89"
+#define EMOJI_RANDONNEUR "\xF0\x9F\x9A\xB6"
 #define EMOJI_SKIEUR "\xE2\x9B\xB7\xEF\xB8\x8F"
 #define EMOJI_SNOWBOARDER "\xF0\x9F\x8F\x82"
 #define EMOJI_LUGISTE "\xF0\x9F\x9B\xB7"
+#define EMOJI_VELO "\xF0\x9F\x9A\xB4"
 #define EMOJI_COURONNE "\xF0\x9F\x91\x91"
 #define EMOJI_FLOCON "\xE2\x9D\x84\xEF\xB8\x8F"
 #define EMOJI_TROPHEE "\xF0\x9F\x8F\x86"
@@ -33,14 +35,16 @@ typedef enum { //Enumeration pour les types de cases
     SAPIN=5,
     DRAPEAU=6,
     COURONNE=7,
-    SKIEUR=8,
-    SNOWBOARDER=9,
-    LUGISTE=10,
-    PINGOUIN=11,
-    BONHOMMENEIGE=12,
-    OURS=13,
-    LOUP=14,
-    DRAGON=15
+    RANDONNEUR=8,
+    SKIEUR=9,
+    SNOWBOARDER=10,
+    LUGISTE=11,
+    VELO=12,
+    PINGOUIN=13,
+    BONHOMMENEIGE=14,
+    OURS=15,
+    LOUP=16,
+    DRAGON=17
 } TypeCase;
 
 typedef struct {
@@ -79,9 +83,11 @@ Defenseur constructeur_FloconPerceCiel(Defenseur a);
 Defenseur constructeur_GardePolaire(Defenseur a);
 Defenseur constructeur_LoupGriffeur(Defenseur a);
 Defenseur constructeur_DieuDesMontagnes(Defenseur a);
+Attaquant constructeur_RandonneurPerdu(Attaquant a);
 Attaquant constructeur_SkieurFrenetique(Attaquant a);
 Attaquant constructeur_SnowboarderAcrobate(Attaquant a);
 Attaquant constructeur_LugisteBarjo(Attaquant a);
+Attaquant constructeur_CyclisteSponsorise(Attaquant a);
 int calculerDistance(int x1, int y1, int x2, int y2);
 float randomFloat();
 void attaquer_defenseurs(Case** carte, Defenseur* defenseurs, int* nbDefenseurs, EnnemiActif* ennemis, int* nbEnnemis, int* score, int* flocons);
