@@ -32,7 +32,7 @@ Defenseur constructeur_GardePolaire(Defenseur a) {
 Defenseur constructeur_LoupGriffeur(Defenseur a) {
     a.type = 4;
     a.portee = 3;
-    a.degats = 25;
+    a.degats = 50;
     a.prix = 25;
     return a;
 }
@@ -47,28 +47,44 @@ Defenseur constructeur_DieuDesMontagnes(Defenseur a) {
 }
 
 
-Attaquant constructeur_SkieurFrenetique(Attaquant a) { // Attaquant rapide et faible
-    a.vie = 400;
-    a.esquive = 0.15;
+Attaquant constructeur_RandonneurPerdu(Attaquant a) { // Attaquant faible quasi pas d'esquive
+    a.vie = 300;
+    a.esquive = 0.5;
     a.gain = 5;
     return a;
 }
 
 
-Attaquant constructeur_SnowboarderAcrobate(Attaquant a) { // Attaquant vitesse moyenne, vie moyenne
-    a.vie = 800;
-    a.esquive = 0.30;
+Attaquant constructeur_SkieurFrenetique(Attaquant a) { // Attaquant faible esquive basse
+    a.vie = 400;
+    a.esquive = 0.15;
     a.gain = 7;
     return a;
 }
 
 
-Attaquant constructeur_LugisteBarjo(Attaquant a) { // Attaquant lent et résistant
-    a.vie = 1600;
-    a.esquive = 0.01;
+Attaquant constructeur_SnowboarderAcrobate(Attaquant a) { // Attaquant vie moyenne bonne esquive
+    a.vie = 800;
+    a.esquive = 0.30;
     a.gain = 10;
     return a;
 }
+
+
+Attaquant constructeur_LugisteBarjo(Attaquant a) { // Attaquant résistant sans esquive
+    a.vie = 1600;
+    a.esquive = 0.01;
+    a.gain = 15;
+    return a;
+}
+
+Attaquant constructeur_CyclisteSponsorise(Attaquant a) { // Attaquant tank esquive moyenne
+    a.vie = 2000;
+    a.esquive = 0.20;
+    a.gain = 20;
+    return a;
+}
+
 
 // Fonction pour calculer la distance euclidienne entre deux unités
 int calculerDistance(int x1, int y1, int x2, int y2) {
@@ -233,29 +249,43 @@ void generer_attaquant(Case** carte, int debut, EnnemiActif** ennemis, int* nbEn
     Attaquant nouv_ennemi;
 
     // Choisir le type d'ennemi selon la vague
-    if (*vague <= 3) {
+    if (*vague <= 1) {
         attaquant = 0;
     } 
-    else if (*vague <= 5) {
+    else if (*vague <= 3) {
         attaquant = rand() % 2;
-    } 
-    else {
+    }
+    else if (*vague <= 5) {
         attaquant = rand() % 3;
+    }
+    else if (*vague <= 7) {
+        attaquant = rand() % 4;
+    }
+    else {
+        attaquant = rand() % 5;
     }
 
     // Construire l'ennemi correspondant et affecter le type de case
     switch (attaquant) {
         case 0:
-            nouv_ennemi = constructeur_SkieurFrenetique(nouv_ennemi);
+            nouv_ennemi = constructeur_RandonneurPerdu(nouv_ennemi);
             carte[0][debut].type = 8;
             break;
         case 1:
-            nouv_ennemi = constructeur_SnowboarderAcrobate(nouv_ennemi);
+            nouv_ennemi = constructeur_SkieurFrenetique(nouv_ennemi);
             carte[0][debut].type = 9;
             break;
         case 2:
-            nouv_ennemi = constructeur_LugisteBarjo(nouv_ennemi);
+            nouv_ennemi = constructeur_SnowboarderAcrobate(nouv_ennemi);
             carte[0][debut].type = 10;
+            break;
+        case 3:
+            nouv_ennemi = constructeur_LugisteBarjo(nouv_ennemi);
+            carte[0][debut].type = 11;
+            break;
+        case 4:
+            nouv_ennemi = constructeur_CyclisteSponsorise(nouv_ennemi);
+            carte[0][debut].type = 12;
             break;
     }
 
