@@ -8,25 +8,27 @@ void statistiques() {
         system("clear");
         // Affichage des informations des défenseurs
         printf("\t =====================DEFENSEURS=====================\n");
-        printf("\t +--------------------+---------+----------+--------+\n");
-        printf("\t |        Nom         | Portée  |  Dégats  |  Prix  |\n");
-        printf("\t +--------------------+---------+----------+--------+\n");
-        printf("\t | Pingu-Patrouilleur |    4    |   100    |    50  |\n");
-        printf("\t | Flocon  Perce-Ciel |    7    |    60    |   100  |\n");
-        printf("\t |   Garde  Polaire   |    1    |   130    |    75  |\n");
-        printf("\t |   Loup  Griffeur   |    3    |    25    |    25  |\n");
-        printf("\t | Dieu Des Montagnes |   50    |   250    |   750  |\n");
-        printf("\t +--------------------+---------+----------+--------+\n\n");
+        printf("\t +--------------------+-------+---------+----------+--------+\n");
+        printf("\t |        Nom         | Emoji | Portée  |  Dégats  |  Prix  |\n");
+        printf("\t +--------------------+-------+---------+----------+--------+\n");
+        printf("\t | Pingu-Patrouilleur |   %s  |    4    |   100    |    50  |\n", EMOJI_PINGOUIN);
+        printf("\t | Flocon  Perce-Ciel |   %s  |    7    |    60    |   100  |\n", EMOJI_BONHOMMENEIGE);
+        printf("\t |   Garde  Polaire   |   %s  |    1    |   130    |    75  |\n", EMOJI_OURS);
+        printf("\t |   Loup  Griffeur   |   %s  |    3    |    50    |    25  |\n", EMOJI_LOUP);
+        printf("\t | Dieu Des Montagnes |   %s  |   50    |   250    |   750  |\n", EMOJI_DRAGON);
+        printf("\t +--------------------+-------+---------+----------+--------+\n\n");
 
         // Affichage des informations des attaquants
         printf("\t =====================ATTAQUANTS=====================\n");
-        printf("\t +--------------------+---------+----------+--------+\n");
-        printf("\t |        Nom         |   Vie   | Esquive  |  Gain  |\n");
-        printf("\t +--------------------+---------+----------+--------+\n");
-        printf("\t | Skieur Frénétique  |    4    |   15%%    |    5   |\n");
-        printf("\t |Snowboarder Acrobate|    7    |   30%%    |    7   |\n");
-        printf("\t |   Lugiste Barjo    |    1    |    1%%    |   10   |\n");
-        printf("\t +--------------------+---------+----------+--------+\n\n");
+        printf("\t +--------------------+-------+---------+----------+--------+\n");
+        printf("\t |        Nom         | Emoji |   Vie   | Esquive  |  Gain  |\n");
+        printf("\t +--------------------+-------+---------+----------+--------+\n");
+        printf("\t | Randonneur Perdu   |   %s  |    300  |    5%%    |    5   |\n", EMOJI_RANDONNEUR);
+        printf("\t | Skieur Frénétique  |   %s   |    400  |   15%%    |    7   |\n", EMOJI_SKIEUR);
+        printf("\t |Snowboarder Acrobate|   %s  |    800  |   30%%    |   10   |\n", EMOJI_SNOWBOARDER);
+        printf("\t |   Lugiste Barjo    |   %s  |   1600  |    1%%    |   15   |\n", EMOJI_LUGISTE);
+        printf("\t |Cycliste Sponsorisé |   %s  |   2000  |   20%%    |   20   |\n", EMOJI_VELO);
+        printf("\t +--------------------+-------+---------+----------+--------+\n\n");
         printf("\t q pour quitter : ");
         
         if (scanf(" %c", &quitter) != 1) {
@@ -80,27 +82,33 @@ void afficher_carte(Case** carte, int taillecarte) {
                     printf("%s", EMOJI_COURONNE);
                     break;
                 case 8:
-                    printf("%s ", EMOJI_SKIEUR);
+                    printf("%s", EMOJI_RANDONNEUR);
                     break;
                 case 9:
-                    printf("%s", EMOJI_SNOWBOARDER);
+                    printf("%s ", EMOJI_SKIEUR);
                     break;
                 case 10:
-                    printf("%s", EMOJI_LUGISTE);
+                    printf("%s", EMOJI_SNOWBOARDER);
                     break;
                 case 11:
-                    printf("%s", EMOJI_PINGOUIN);
+                    printf("%s", EMOJI_LUGISTE);
                     break;
                 case 12:
-                    printf("%s", EMOJI_BONHOMMENEIGE);
+                    printf("%s", EMOJI_VELO);
                     break;
                 case 13:
-                    printf("%s", EMOJI_OURS);
+                    printf("%s", EMOJI_PINGOUIN);
                     break;
                 case 14:
-                    printf("%s", EMOJI_LOUP);
+                    printf("%s", EMOJI_BONHOMMENEIGE);
                     break;
                 case 15:
+                    printf("%s", EMOJI_OURS);
+                    break;
+                case 16:
+                    printf("%s", EMOJI_LOUP);
+                    break;
+                case 17:
                     printf("%s", EMOJI_DRAGON);
                     break;
                 default:
@@ -124,7 +132,7 @@ void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defense
     char placer = 'a';
     
     if (*flocons < 25) {
-        printf("\t Vous n'avez pas assez de flocons (il faut 100 %s au minimum) (vous avez %d %s ).\n",EMOJI_FLOCON, *flocons, EMOJI_FLOCON);
+        printf("\t Vous n'avez pas assez de flocons (il faut 25 %s au minimum) (vous avez %d %s ).\n",EMOJI_FLOCON, *flocons, EMOJI_FLOCON);
         sleep(2);
     }
     else { 
@@ -138,7 +146,7 @@ void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defense
             }
 
             while (placer != 'o' && placer != 'n') {
-                printf("\tValeur incorrecte. Réessayez :\n");
+                printf("\t Valeur incorrecte. Réessayez :\n");
                 printf("\t Votre choix : ");
                 
                 if (scanf(" %c", &placer) != 1) {
@@ -269,7 +277,7 @@ void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defense
             }
 
             // Placement du défenseur
-            carte[coord_y][coord_x_index].type = choix_defenseur + 10;
+            carte[coord_y][coord_x_index].type = choix_defenseur + 12;
             carte[coord_y][coord_x_index].defenseur = nouv_def;
             *flocons -= nouv_def.prix;
             
@@ -277,7 +285,7 @@ void placement_de_defenseur(Case** carte, int taillecarte, int* flocons, Defense
             
             printf("\n\t Défenseur placé. Il vous reste %d %s .\n", *flocons, EMOJI_FLOCON);
 
-        } while (placer != 'n' && *flocons >= 50);
+        } while (placer != 'n' && *flocons >= 25);
     }
 }
 
@@ -311,7 +319,7 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
         }
     }
 	
-	for(; *vague <= 8; (*vague)++) { //Boucle des vagues
+	for(; *vague <= 30; (*vague)++) { //Boucle des vagues
 		compteur = 0;
 		placement_de_defenseur(*carte, *taillecarte, flocons, *defenseurs, nbDefenseurs);
 		generer_attaquant(*carte, colonneDebut, ennemis, nbEnnemis, &compteur, vague);
@@ -332,7 +340,7 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
 		    }
 
 		    // Génère un nouvel attaquant seulement si la case est vide
-		    if ((*carte)[0][colonneDebut].type == 6 && compteur<=8){
+		    if ((*carte)[0][colonneDebut].type == 6 && compteur<=61){
 		        generer_attaquant(*carte, colonneDebut, ennemis, nbEnnemis, &compteur, vague);
 		    }
 		    
@@ -355,7 +363,7 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
                         sauvegarde("sauvegarde.txt", *carte, *taillecarte, *defenseurs, *nbDefenseurs, *ennemis, *nbEnnemis, *score, *flocons, *vague);
                         printf("\t Partie sauvegardée !\n");
                         sleep(1);
-                        printf(" \t Retour menu principal.\n");
+                        printf(" \t Retour menu principal.");
                         usleep(333333);
                         printf(".");
                         usleep(333333);
@@ -373,9 +381,9 @@ void lancerpartie(Case*** carte, int* taillecarte, Defenseur** defenseurs, int* 
 int menuDemarrage(){
     int choix_menu=0; //Variable pour stocker le choix de l'utilisateur
     
-    printf("\n \t === %s%s%s OPERATION FLOCON %s %s%s === \n", EMOJI_PINGOUIN, EMOJI_BONHOMMENEIGE, EMOJI_OURS, EMOJI_SKIEUR, EMOJI_SNOWBOARDER, EMOJI_LUGISTE);
+    printf("\n \t === %s%s%s%s%s OPERATION FLOCON %s%s %s%s%s === \n", EMOJI_PINGOUIN, EMOJI_BONHOMMENEIGE, EMOJI_OURS, EMOJI_LOUP, EMOJI_DRAGON, EMOJI_RANDONNEUR, EMOJI_SKIEUR, EMOJI_SNOWBOARDER, EMOJI_LUGISTE, EMOJI_VELO);
     printf("\n \t =============== KESAKO ? ============= \n");
-    printf("\n \t ❄️ Opération Flocon❄️  est un jeu de tower defense se déroulant dans un univers hivernal. \n \t Le joueur doit défendre une couronne centrale contre des vagues d’ennemis composées de skieurs \n \t frénétiques⛷️, snowboarders acrobates🏂 et lugistes barjos🛷. Pour se défendre, il peut compter sur \n \t des pingu-patrouilleurs🐧, des flocons perce-ciel⛄, des gardes polaires🐻, des loups griffeurs🐺 \n \t et le dieu des montagnes🐉 qu’il peut positionner stratégiquement sur la carte. La carte de jeu est \n \t générée aléatoirement à chaque partie, avec un chemin unique menant à la couronne👑, que les \n \t ennemis empruntent automatiquement. Le joueur peut placer ses défenseurs autour de celui-ci, \n \t en tenant compte des contraintes de positionnement (les défenseurs peuvent être posés \n \t uniquement sur des cases de neige◻️, mais pas sur les sapins🌲et les rochers🪨). \n \t L’objectif principal est de repousser les vagues successives d’ennemis en optimisant la position et le \n \t type des défenseurs, tout en gérant les ressources disponibles. Le joueur commence avec 75❄️ (flocons) \n \t pour positionner ses défenseurs et avec 0🏆(points), À chaque ennemi éliminé, il gagne un🏆. \n \t A chaque vague, il gagne des❄️  en fonction du nombres d’attaquants battus et de leur type (⛷️,🏂,🛷). \n");
+    printf("\n \t ❄️ Opération Flocon❄️  est un jeu de tower defense se déroulant dans un univers hivernal.\n \t Le joueur doit défendre une couronne centrale contre des vagues d’ennemis composées \n \t de randonneurs perdus, de skieurs frénétiques⛷️, de snowboarders acrobates🏂 et de lugistes \n \t barjos🛷 ainsi que de cyclistes sponsorisés🚴. Pour se défendre, il peut compter sur \n \t des pingu-patrouilleurs🐧, des flocons perce-ciel⛄, des gardes polaires🐻, des loups \n \t griffeurs🐺 et le dieu des montagnes🐉 qu’il peut positionner stratégiquement \n \t sur la carte. La carte de jeu est générée aléatoirement à chaque partie, avec un \n \t chemin unique menant à la couronne 👑, que les ennemis empruntent automatiquement.\n \t Le joueur peut placer ses défenseurs autour de celui-ci, en tenant compte \n \t des contraintes de positionnement (les défenseurs peuvent être posés uniquement sur des \n \t cases de neige◻️ , mais pas sur les sapins🌲 et les rochers🪨). L’objectif principal \n \t est de repousser les vagues successives d’ennemis en optimisant la position et le \n \t type des défenseurs, tout en gérant les ressources disponibles. Le joueur commence avec \n \t 75 ❄️ (flocons) pour positionner ses défenseurs et avec 0 🏆(points), À chaque \n \t ennemi éliminé, il gagne un 🏆. A chaque vague, il gagne des ❄️  en fonction du nombres \n \t d’attaquants battus et de leur type (🚶, ⛷️, 🏂, 🛷, 🚴). \n");
     printf("\n \t =========== MENU PRINCIPAL =========== \n");
     printf("\n \t 1 - ✨ Nouvelle Partie \t \n");
     printf("\n \t 2 - ♻️  Reprendre une partie \t \n");
@@ -407,13 +415,13 @@ int menuDemarrage(){
 void defaite(int* score) {
     printf("\n \t 😢 Vous avez perdu ! 😢\n");
     printf("\n \t Score = %d %s \n", *score, EMOJI_TROPHEE);
-    sleep(2);
-    printf(" \t Retour menu principal.\n");
-    usleep(333333);
+    sleep(1);
+    printf(" \t Retour menu principal.");
+    sleep(1);
     printf(".");
-    usleep(333333);
+    sleep(1);
     printf(".\n");
-    usleep(333333);
+    sleep(1);
 }
 
 
@@ -421,11 +429,11 @@ void defaite(int* score) {
 void victoire(int* score) {
     printf("\n \t 🥳 Vous avez gagné ! 🥳\n");
     printf("\n \t Score = %d %s \n", *score, EMOJI_TROPHEE);
-    sleep(2);
-    printf(" \t Retour menu principal.\n");
-    usleep(333333);
+    sleep(1);
+    printf(" \t Retour menu principal.");
+    sleep(1);
     printf(".");
-    usleep(333333);
+    sleep(1);
     printf(".\n");
-    usleep(333333);
+    sleep(1);
 }
