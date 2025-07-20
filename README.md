@@ -8,9 +8,11 @@
 
 **Opération Flocon** est un jeu de **tower defense** prenant place dans un univers hivernal. Le joueur doit défendre une **couronne centrale** contre des vagues d’ennemis déjantés :
 
+* 🚶 **Randonneur Perdu**
 * 🎿 **Skieurs frénétiques**
 * 🏂 **Snowboarders acrobates**
 * 🛷 **Lugistes barjos**
+* 🚴 **Cycliste Sponsorisé**
 
 Pour se défendre, le joueur dispose de :
 
